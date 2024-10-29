@@ -1,0 +1,15 @@
+.openapi-generator-ignore
+apis/DefaultApi.ts
+apis/index.ts
+index.ts
+models/CreateCertDto.ts
+models/CreateDeviceDto.ts
+models/CreateOrchestratorDto.ts
+models/CreateOrganizationRequestDto.ts
+models/CreateRoomDto.ts
+models/OrchestratorVerifyLicenseDto.ts
+models/UpdateDeviceDto.ts
+models/UpdateOrchestratorDto.ts
+models/UpdateOrganizationRequestDto.ts
+models/index.ts
+runtime.ts

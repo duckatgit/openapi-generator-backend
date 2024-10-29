@@ -1,0 +1,755 @@
+openapi: 3.0.0
+servers:
+  - url: https://api.wavital.ai
+paths:
+  /api/v1/cert:
+    post:
+      operationId: CertController_create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCertDto"
+      responses:
+        "201":
+          description: ""
+  /api/v1/organization/{organizationId}/user:
+    post:
+      operationId: OrganizationController_addUserToOrganization
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddUserToOrganizationRequestDto"
+      responses:
+        "201":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/user/{userId}:
+    put:
+      operationId: OrganizationController_editUserInOrganization
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditUserInOrganizationRequestDto"
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    delete:
+      operationId: OrganizationController_removeUserFromOrganization
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization:
+    post:
+      operationId: OrganizationController_register
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrganizationRequestDto"
+      responses:
+        "201":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}:
+    patch:
+      operationId: OrganizationController_updateOrganization
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrganizationRequestDto"
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    get:
+      operationId: OrganizationController_findById
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    delete:
+      operationId: OrganizationController_removeOrganization
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/orchestrator:
+    get:
+      operationId: OrchestratorController_findOchestratorsByOrg
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: status
+          required: false
+          in: query
+          schema:
+            enum:
+              - AWAITING_SETUP
+              - READY
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    post:
+      operationId: OrchestratorController_addOrchestrator
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrchestratorDto"
+      responses:
+        "201":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}:
+    get:
+      operationId: OrchestratorController_fetchOrchestratorById
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    patch:
+      operationId: OrchestratorController_update
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrchestratorDto"
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    delete:
+      operationId: OrchestratorController_delete
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/config:
+    get:
+      operationId: OrchestratorController_fetchOrchestratorConfig
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/role:
+    get:
+      operationId: OrchestratorController_fetchRoleForOrchestrator
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  ? /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/license/verify
+  : post:
+      operationId: OrchestratorLicenseController_verify
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrchestratorVerifyLicenseDto"
+      responses:
+        "201":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/user/updateClaims:
+    get:
+      operationId: UserController_updateClaims
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/user/organizations:
+    get:
+      operationId: UserController_getOrganizations
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/user/{id}:
+    patch:
+      operationId: UserController_updateUser
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequestDto"
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    get:
+      operationId: UserController_findById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/room:
+    post:
+      operationId: RoomController_create
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateRoomDto"
+      responses:
+        "201":
+          description: ""
+      security:
+        - bearer: []
+    get:
+      operationId: RoomController_findAll
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  ? /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/room/{roomId}
+  : get:
+      operationId: RoomController_findOne
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: roomId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    patch:
+      operationId: RoomController_update
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: roomId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRoomDto"
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+    delete:
+      operationId: RoomController_remove
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: roomId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  ? /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/room/{roomId}/devices
+  : get:
+      operationId: RoomController_fetchDevicesByRoom
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: roomId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/device:
+    post:
+      operationId: DeviceController_create
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDeviceDto"
+      responses:
+        "201":
+          description: ""
+      security:
+        - bearer: []
+  ? /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/device/signed
+  : get:
+      operationId: DeviceController_createdSignedRegistrationUrl
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: deviceId
+          required: true
+          in: query
+          schema:
+            type: string
+        - name: roomId
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+  ? /api/v1/organization/{organizationId}/orchestrator/{orchestratorId}/device/{id}
+  : get:
+      operationId: DeviceController_findOne
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+        - bearer: []
+    patch:
+      operationId: DeviceController_update
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateDeviceDto"
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+        - bearer: []
+    delete:
+      operationId: DeviceController_remove
+      parameters:
+        - name: organizationId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: orchestratorId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - bearer: []
+        - bearer: []
+info:
+  title: Platform Healthcare API
+  description: The Platform Healthcare API description
+  version: "1.0"
+  contact: {}
+tags: []
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+  schemas:
+    CreateCertDto:
+      type: object
+      properties:
+        domain:
+          type: string
+      required:
+        - domain
+    AddUserToOrganizationRequestDto:
+      type: object
+      properties: {}
+    EditUserInOrganizationRequestDto:
+      type: object
+      properties: {}
+    CreateOrganizationRequestDto:
+      type: object
+      properties:
+        domain:
+          type: string
+        organizationName:
+          type: string
+        organizationIDFileLink:
+          type: string
+        governmentIDFileLink:
+          type: string
+      required:
+        - domain
+        - organizationName
+        - organizationIDFileLink
+        - governmentIDFileLink
+    UpdateOrganizationRequestDto:
+      type: object
+      properties:
+        domain:
+          type: string
+        organizationName:
+          type: string
+        organizationIDFileLink:
+          type: string
+        governmentIDFileLink:
+          type: string
+    CreateOrchestratorDto:
+      type: object
+      properties:
+        label:
+          type: string
+      required:
+        - label
+    UpdateOrchestratorDto:
+      type: object
+      properties:
+        label:
+          type: string
+        ip:
+          type: string
+        port:
+          type: number
+      required:
+        - ip
+        - port
+    OrchestratorVerifyLicenseDto:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+        - key
+    UpdateUserRequestDto:
+      type: object
+      properties: {}
+    CreateRoomDto:
+      type: object
+      properties:
+        label:
+          type: string
+        description:
+          type: string
+      required:
+        - label
+        - description
+    UpdateRoomDto:
+      type: object
+      properties: {}
+    CreateDeviceDto:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        key:
+          type: string
+        roomId:
+          type: string
+        label:
+          type: string
+      required:
+        - deviceId
+        - key
+        - roomId
+        - label
+    UpdateDeviceDto:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        key:
+          type: string
+        roomId:
+          type: string
+        label:
+          type: string
