@@ -6,16 +6,6 @@ import { CreateOrganizationRequestDto } from 'src/openapi-client';
 export class UsersController {
     constructor(private readonly userApiService: UserApiService) { }
 
-    @Get('org')
-    async getOrgList() {
-        try {
-            const user = await this.userApiService.getOrganizationList();
-            return user;
-        } catch (error) {
-            return { message: 'Error retrieving user data', error };
-        }
-    }
-
     @Post('register')
     async registerOrganization(@Body() createOrganizationRequestDto: CreateOrganizationRequestDto) {
         try {

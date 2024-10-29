@@ -11,27 +11,11 @@ export class UserApiService {
     constructor() {
         this.configuration = new Configuration({
             basePath: 'https://api.wavital.ai',
-            accessToken: async () => {
-                const token = process.env.BEARER_TOKEN; // Fetch token from environment
-                if (!token) {
-                    throw new Error("Bearer token is not set.");
-                }
-                return token;
-            },
+            accessToken: process.env.BEARER_TOKEN
         });
         this.defaultApi = new DefaultApi(this.configuration);
     }
 
-    async getOrganizationList() {
-        try {
-            console.log('this.defaultApi', this.defaultApi)
-            const organizations = await this.defaultApi.userControllerGetOrganizations();
-            return organizations;
-        } catch (error) {
-            console.error('Error fetching user:', error);
-            throw error;
-        }
-    }
 
     async registerOrganization(createOrganizationRequestDto: CreateOrganizationRequestDto) {
         try {
